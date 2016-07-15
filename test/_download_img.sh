@@ -34,7 +34,10 @@ function assert_dependencies {
 }
 
 function get_remote_etag {
-  REMOTE_ETAG=$(curl -X HEAD -L ${DOWNLOAD_URL} -I -s | grep ETag | awk -F ": " '{print $2}' | tr -d '\r\n')
+  curl -X HEAD -L ${DOWNLOAD_URL} -I -s > tmp_get_remote_etag
+  REMOTE_ETAG=$(grep ETag tmp_get_remote_etag | awk -F ": " '{print $2}' | tr -d '\r\n')
+  REMOTE_LAST_MODIFIED=$(grep Last-Modified tmp_get_remote_etag | awk -F ": " '{print $2}' | tr -d '\r\n')
+  rm -f tmp_get_remote_etag
 }
 
 function get_local_etag {
@@ -42,14 +45,20 @@ function get_local_etag {
     if [ -f "${IMG_DIR}/${LOCAL_FILE_NAME}.etag" ]; then
       LOCAL_ETAG=$(cat ${IMG_DIR}/${LOCAL_FILE_NAME}.etag | tr -d '\r\n')
     fi
+    if [ -f "${IMG_DIR}/${LOCAL_FILE_NAME}.last-modified" ]; then
+      LOCAL_LAST_MODIFIED=$(cat ${IMG_DIR}/${LOCAL_FILE_NAME}.last-modified | tr -d '\r\n')
+    fi
   fi
 }
 
 function download_zip {
   if [ "${REMOTE_ETAG}" == "${LOCAL_ETAG}" ]; then
     info "IDENTICAL!! Skip to download"
+  elif [ "${REMOTE_LAST_MODIFIED}" == "${LOCAL_LAST_MODIFIED}" ]; then
+    info "IDENTICAL!! Skip to download"
   else
     echo ${REMOTE_ETAG} > "${IMG_DIR}/${LOCAL_FILE_NAME}.etag"
+    echo ${REMOTE_LAST_MODIFIED} > "${IMG_DIR}/${LOCAL_FILE_NAME}.last-modified"
     rm -f "${IMG_DIR}/${LOCAL_FILE_NAME}.zip"
     curl -o "${IMG_DIR}/${LOCAL_FILE_NAME}.zip" -L ${DOWNLOAD_URL}
     if [ "$?" != "0" ]; then
@@ -76,6 +85,9 @@ get_local_etag
 get_remote_etag
 info "Remote ETag [${REMOTE_ETAG}]"
 info "Local ETag  [${LOCAL_ETAG}]"
+
+info "Remote Last-Modified [${REMOTE_LAST_MODIFIED}]"
+info "Local Last-Modified  [${LOCAL_LAST_MODIFIED}]"
 
 download_zip
 extract_img
