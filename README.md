@@ -32,3 +32,8 @@ Use Vagrant in order to mount OS file images.
 ```
 
 Docker installation is included in `Vagrantfile`.
+
+## Revision History
+* 1.0.0
+  - Initial Release
+  - Add Raspbian installation test
