@@ -5,7 +5,7 @@
 apt-get -qq update
 apt-get -qq upgrade
 curl -sL https://deb.nodesource.com/setup_0.12 | bash -
-apt-get install -qq python-dev python-rpi.gpio bluez nodejs
+apt-get install -qq python-dev python-rpi.gpio bluez nodejs libudev-dev
 
 NODE_OPTS=--max-old-space-size=128 \
   DISABLE_SERVICE_INSTALL=1 \
