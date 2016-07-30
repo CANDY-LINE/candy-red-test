@@ -3,7 +3,6 @@
 # Run inside QEMU guest
 
 apt-get -qq update
-apt-get -qq upgrade
 curl -sL https://deb.nodesource.com/setup_0.12 | bash -
 apt-get install -qq python-dev python-rpi.gpio bluez nodejs libudev-dev
 
