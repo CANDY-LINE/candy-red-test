@@ -19,16 +19,36 @@ $ sudo ./run_test.sh
 Use Vagrant in order to mount OS file images.
 
 ```
-(host) $ vagrant up # => may fail (E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable) ...)
- ** Run the following 2 commands when the first vagrant up fails: **
+(host) $ vagrant up
+```
+
+=> MAY fail (`E: Could not get lock /var/lib/dpkg/lock - open (11: Resource temporarily unavailable) ...`)
+
+** Run the following 2 commands only when the first `vagrant up` fails: **
+
+```
 (host) $ vagrant up # => retry then VM is up
 (host) $ vagrant reload # => vbguest plugin will work
+```
 
+After vagrant is up, run the following command to enter vagrant box.
 
+```
 (host) $ vagrant ssh
+```
 
+Move to `/vagrant`,
+
+```
 (vagrant) $ cd /vagrant
+```
+
+Then you can choose one of the following commands, the first one for running tests, and the other for entering bash mode.
+
+```
 (vagrant) $ time sudo test/run_tests.sh
+
+(vagrant) $ time sudo SHELL=1 test/run_tests.sh
 ```
 
 Docker installation is included in `Vagrantfile`.
