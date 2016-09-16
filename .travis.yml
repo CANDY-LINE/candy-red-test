@@ -1,0 +1,24 @@
+language: bash
+
+sudo: required
+
+services:
+  - docker
+
+addons:
+  apt:
+    packages:
+    - curl
+    - unzip
+
+before_install:
+  - docker pull multiarch/qemu-user-static:register
+  - docker pull ryankurte/docker-rpi-emu
+
+script:
+    - TAG=develop bash test/run_tests.sh
+    - TAG=master bash test/run_tests.sh
+
+cache:
+  directories:
+    - img
