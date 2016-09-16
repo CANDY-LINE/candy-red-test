@@ -40,7 +40,7 @@ cp ./raspbian_test.sh ${MOUNT_DIR}
 
 # Launch QEMU and perform test
 echo "Starting test..."
-chroot $MOUNT_DIR /usr/bin/env TAG=${TAG} ./raspbian_test.sh
+chroot $MOUNT_DIR /usr/bin/env TAG=${TAG} SHELL=${SHELL} ./raspbian_test.sh
 # chroot $MOUNT_DIR /bin/bash
 echo "Finishing test..."
 
