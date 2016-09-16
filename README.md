@@ -1,6 +1,9 @@
 CANDY-Red installation tests
 ===
 
+[![GitHub release](https://img.shields.io/github/release/CANDY-LINE/candy-red-test.svg)](https://github.com/CANDY-LINE/ltepi2-service/releases/latest)
+[![License MIT](https://img.shields.io/github/license/CANDY-LINE/candy-red-test.svg)](http://opensource.org/licenses/MIT)
+
 # Prerequisites
 
  * Vagrant v1.8.4+
